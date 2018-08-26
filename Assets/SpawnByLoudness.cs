@@ -12,6 +12,7 @@ public class SpawnByLoudness : MonoBehaviour {
 	public float spawnRate = .5f;
 	float timeSinceLastSpawn = 0f;
     public float thrust = 1f;
+    public float currentNote;
 
     void Start() {
         if (objectToSpawn == null)
@@ -32,14 +33,20 @@ public class SpawnByLoudness : MonoBehaviour {
         float loudness = micIn.loudness;
         if (loudness > threshold && canSpawn)
         {
-            Vector3 scale = new Vector3(loudness, loudness, loudness);
-            GameObject newObject = (GameObject)Instantiate(objectToSpawn, this.transform.position, this.transform.rotation);
-            newObject.transform.localScale += scale;
-            Rigidbody rb = newObject.GetComponent<Rigidbody>();
-            rb.AddRelativeForce(Vector3.forward * thrust * loudness);
-            timeSinceLastSpawn = 0f;
+            SpawnNote(loudness);
         }
 
 
-   }
+    }
+
+    private void SpawnNote(float loudness)
+    {
+        Vector3 scale = new Vector3(loudness, loudness, loudness);
+        GameObject newObject = (GameObject)Instantiate(objectToSpawn, this.transform.position, this.transform.rotation);
+        newObject.transform.localScale += scale;
+        Rigidbody rb = newObject.GetComponent<Rigidbody>();
+        rb.AddRelativeForce(Vector3.forward * thrust * loudness);
+        timeSinceLastSpawn = 0f;
+        currentNote = micIn.frequency;
+    }
 }

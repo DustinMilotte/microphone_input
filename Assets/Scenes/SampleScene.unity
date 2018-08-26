@@ -619,11 +619,11 @@ RectTransform:
   m_Father: {fileID: 1687987390}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &953213120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -816,7 +816,7 @@ GameObject:
   - component: {fileID: 1411153314}
   - component: {fileID: 1411153313}
   m_Layer: 0
-  m_Name: SpawnByLoudness
+  m_Name: NoteSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -830,15 +830,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 1411153312}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de7ebee0afe65a9458dcb73096f251b5, type: 3}
+  m_Script: {fileID: 11500000, guid: 8967ffd01e6a99c4e882079d9d1fdddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioInputObject: {fileID: 1282430181}
+  audioInputObject: {fileID: 0}
   threshold: 1
   objectToSpawn: {fileID: 1420426281961292, guid: b6d68eadfbccaf44cac840717ab1046e,
     type: 2}
-  spawnRate: 1
-  thrust: 100
+  spawnRate: 0.15
+  thrust: 1
+  currentNote: 0
+  noteMonitor: 0
+  noteMaterials:
+  - {fileID: 2100000, guid: a9336aa1c4bd4c64bbb07eb425eab00d, type: 2}
+  - {fileID: 2100000, guid: 29a1638c6d3623649a5c10104e9a8ca4, type: 2}
+  - {fileID: 2100000, guid: 359034e6e7b59604a99c9617192bada9, type: 2}
+  - {fileID: 2100000, guid: 4364f291864e3064eb9f7de87ca2e633, type: 2}
+  - {fileID: 2100000, guid: a06ca0b3ba465be468605577f4a61b73, type: 2}
+  - {fileID: 2100000, guid: da27fb231d2d40e46b9b159ef43e1df1, type: 2}
+  - {fileID: 2100000, guid: d1efd076945b71e4ba5b1fc114937922, type: 2}
+  - {fileID: 2100000, guid: 4c284f3b5fec9924883035bc99ee15a8, type: 2}
+  - {fileID: 2100000, guid: 32ff95ddfe8e26b419c99b1c3e67c468, type: 2}
+  - {fileID: 2100000, guid: 048b41e470ba76d4e8a89cbe86e282c3, type: 2}
+  - {fileID: 2100000, guid: 8df55082ca462db498f79cd0b82fb47b, type: 2}
+  - {fileID: 2100000, guid: 39dea2e3c51545c4bb707a7e068f6712, type: 2}
+  - {fileID: 2100000, guid: ceb7683feb763ef41baa2c5878de3a3c, type: 2}
+  noteFinder: {fileID: 1451530840}
+  newNoteMat: {fileID: 0}
 --- !u!4 &1411153314
 Transform:
   m_ObjectHideFlags: 0
@@ -883,6 +901,7 @@ MonoBehaviour:
   threshold: 1
   text: 
   noteText: {fileID: 953213120}
+  foundNote: 
 --- !u!224 &1451530841
 RectTransform:
   m_ObjectHideFlags: 0
@@ -939,11 +958,6 @@ Prefab:
     - target: {fileID: 4140925859628202, guid: b6d68eadfbccaf44cac840717ab1046e, type: 2}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114500945176125942, guid: b6d68eadfbccaf44cac840717ab1046e,
-        type: 2}
-      propertyPath: shrinkFactor
-      value: 0.98
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6d68eadfbccaf44cac840717ab1046e, type: 2}
