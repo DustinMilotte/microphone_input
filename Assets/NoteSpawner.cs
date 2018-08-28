@@ -54,16 +54,22 @@ public class NoteSpawner : MonoBehaviour {
 
     private void SpawnNote(float loudness)
     { 
-		print("notefinder.foundNote " + noteFinder.foundNote);
+		// print("notefinder.foundNote " + noteFinder.foundNote);
 
-		if(micIn.frequency != 181){
+		if(
+			micIn.frequency != 181 && 
+			micIn.frequency != 175 && 
+			micIn.frequency > 20
+			){
 			Vector3 scale = new Vector3(loudness, loudness, loudness);
 			
 			foreach(Material mat in noteMaterials){
 				// print(mat.name);
 				if(mat.name == noteFinder.foundNote){
 					newNoteMat = mat;
-					print("found mat. newNoteMat =  " + newNoteMat);
+					// print("found mat. newNoteMat =  " + newNoteMat);
+				} else {
+					print("no mat found");
 				}
 			}
 			GameObject newNote = (GameObject)Instantiate(objectToSpawn, this.transform.position, this.transform.rotation);
@@ -74,7 +80,7 @@ public class NoteSpawner : MonoBehaviour {
 			timeSinceLastSpawn = 0f;
 			currentNote = micIn.frequency;
 			playingNote = true;
-			// print("current note [" + notePlayedIndex +"] " + currentNote);
+			print("current note [" + notePlayedIndex +"] " + currentNote);
 			notePlayedIndex++;
 		}
     }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class MicrophoneInput : MonoBehaviour {
@@ -9,12 +10,14 @@ public class MicrophoneInput : MonoBehaviour {
 	public string audioInputDevice;
     int sampleRate;
     public float frequency;
+    public Text freqText;
+    public FFTWindow myFFTWindow;
 
     void Start() {
         // TODO replace with UI menu
         string [] mics = Microphone.devices;
             foreach(string mic in mics){print(mic);}
-
+        myFFTWindow = FFTWindow.BlackmanHarris;
         sampleRate = AudioSettings.outputSampleRate;
         audioSource = GetComponent<AudioSource>();
 		audioInputDevice = Microphone.devices[1].ToString();
@@ -29,6 +32,7 @@ public class MicrophoneInput : MonoBehaviour {
     void Update(){
         loudness = GetAveragedVolume() * sensitivity;
 		frequency = GetFundamentalFrequency();
+        freqText.text = frequency.ToString();
     }
 
     float GetAveragedVolume(){
@@ -47,7 +51,7 @@ public class MicrophoneInput : MonoBehaviour {
     float GetFundamentalFrequency(){
         float fundamentalFrequency = 0f;
         float [] data = new float[8192];
-        audioSource.GetSpectrumData(data,0, FFTWindow.BlackmanHarris);
+        audioSource.GetSpectrumData(data,0, myFFTWindow);
         float s = 0f;
         int i = 0;
         for(int j = 1; j < 8192; j++){

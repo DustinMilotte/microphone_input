@@ -61,7 +61,7 @@ public class NoteFinder : MonoBehaviour {
         }
         else if(freq >= 403.8f && freq <= 427.7f)
         {
-          foundNote = "G#4Ab4";
+          foundNote = "G#Ab4";
         }
         else if(freq >= 427.8f && freq <= 453.1f)
         {
@@ -69,7 +69,7 @@ public class NoteFinder : MonoBehaviour {
         }
         else if(freq >= 453.2f && freq <= 480f)
         {
-          foundNote = "A#4Bb4";
+          foundNote = "A#Bb4";
         }
         else if(freq >= 480.1f && freq <= 508.6f)
         {
