@@ -18,6 +18,11 @@ public class NoteSpawner : MonoBehaviour {
 	public Material [] noteMaterials;
 	public NoteFinder noteFinder;
 	public Material newNoteMat;
+	bool noteBufferOpen;
+	public float noteBufferLength = 3;
+	float timeSinceNoteBufferStarted;
+	public string noteBuffer = "";
+	public Spawner spawner;
 
     void Start() {
         if (objectToSpawn == null)
@@ -49,11 +54,22 @@ public class NoteSpawner : MonoBehaviour {
 		if(loudness < threshold && playingNote) {
 			playingNote = false;
 		}
+		if (Input.GetAxis("LeftController") > 0 && !noteBufferOpen){
+			noteBufferOpen = true;
+				noteBuffer = "";
+			print("buffer open");
+		} else if(noteBufferOpen){
+			timeSinceNoteBufferStarted += Time.deltaTime;
+			if(timeSinceNoteBufferStarted >= noteBufferLength){
+				noteBufferOpen = false;
+				print("buffer closed");
+				timeSinceNoteBufferStarted = 0;
+			}
+		}
     }
 
 
-    private void SpawnNote(float loudness)
-    { 
+    private void SpawnNote(float loudness) { 
 		// print("notefinder.foundNote " + noteFinder.foundNote);
 
 		if(
@@ -67,7 +83,7 @@ public class NoteSpawner : MonoBehaviour {
 				// print(mat.name);
 				if(mat.name == noteFinder.foundNote){
 					newNoteMat = mat;
-					// print("found mat. newNoteMat =  " + newNoteMat);
+					print("found mat. newNoteMat =  " + newNoteMat);
 				} else {
 					print("no mat found");
 				}
@@ -80,8 +96,15 @@ public class NoteSpawner : MonoBehaviour {
 			timeSinceLastSpawn = 0f;
 			currentNote = micIn.frequency;
 			playingNote = true;
-			print("current note [" + notePlayedIndex +"] " + currentNote);
+			// print("current note [" + notePlayedIndex +"] " + currentNote);
 			notePlayedIndex++;
+			if(noteBufferOpen){
+				noteBuffer += noteFinder.foundNote;
+			}
+			if(noteBuffer.Contains("C4E4G4")){
+				print("C major chord");
+				spawner.majorChordPlayed = true;
+			}
 		}
     }
 }

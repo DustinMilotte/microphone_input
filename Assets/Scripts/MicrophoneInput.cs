@@ -20,7 +20,7 @@ public class MicrophoneInput : MonoBehaviour {
         myFFTWindow = FFTWindow.BlackmanHarris;
         sampleRate = AudioSettings.outputSampleRate;
         audioSource = GetComponent<AudioSource>();
-		audioInputDevice = Microphone.devices[1].ToString();
+		audioInputDevice = Microphone.devices[2 ].ToString();
 		print("audio input device = " + audioInputDevice);
         audioSource.clip = Microphone.Start(audioInputDevice, true, 1, 44100);
         audioSource.loop = true; 
